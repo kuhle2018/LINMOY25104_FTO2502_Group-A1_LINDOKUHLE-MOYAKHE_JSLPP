@@ -2,6 +2,8 @@ import { fetchTasksFromAPI } from './api.js';
 import { saveTasksToStorage, loadTasksFromStorage } from './storage.js';
 import { renderTasks, generateTaskId } from './tasks.js';
 import { openTaskModal, closeTaskModal, getCurrentTaskId } from './modal.js';
+import { initSidebar } from './sidebar.js';
+import { initThemeToggle } from './theme.js';
 
 let tasks = [];
 let isLoading = false;
@@ -48,9 +50,11 @@ async function init() {
 }
 
 // Add new task button
-addTaskBtn.addEventListener('click', () => {
-  openTaskModal(null);
-});
+if (addTaskBtn) {
+  addTaskBtn.addEventListener('click', () => {
+    openTaskModal(null);
+  });
+}
 
 // Listen for task card click (custom event)
 window.addEventListener('task:open', (e) => {
@@ -58,45 +62,46 @@ window.addEventListener('task:open', (e) => {
 });
 
 // Close modal button
-closeModalBtn.addEventListener('click', closeTaskModal);
+if (closeModalBtn) {
+  closeModalBtn.addEventListener('click', closeTaskModal);
+}
 
 // Handle form submit (edit or add)
-taskForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const id = getCurrentTaskId();
-  const title = taskForm['task-title'].value.trim();
-  const description = taskForm['task-desc'].value.trim();
-  const status = taskForm['task-status'].value;
+if (taskForm) {
+  taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = getCurrentTaskId();
+    const title = taskForm['task-title'].value.trim();
+    const description = taskForm['task-desc'].value.trim();
+    const status = taskForm['task-status'].value;
 
-  if (!title) return;
+    if (!title) return;
 
-  if (id) {
-    // Edit existing task
-    tasks = tasks.map(task =>
-      task.id === id ? { ...task, title, description, status } : task
-    );
-  } else {
-    // Add new task
-    const newTask = {
-      id: generateTaskId(tasks),
-      title,
-      description,
-      status,
-    };
-    tasks.push(newTask);
-  }
+    if (id) {
+      // Edit existing task
+      tasks = tasks.map(task =>
+        task.id === id ? { ...task, title, description, status } : task
+      );
+    } else {
+      // Add new task
+      const newTask = {
+        id: generateTaskId(tasks),
+        title,
+        description,
+        status,
+      };
+      tasks.push(newTask);
+    }
 
-  saveTasksToStorage(tasks);
-  renderTasks(tasks);
-  closeTaskModal();
-});
+    saveTasksToStorage(tasks);
+    renderTasks(tasks);
+    closeTaskModal();
+  });
+}
 
-import { initSidebar } from './sidebar.js';
-import { initThemeToggle } from './theme.js';
-
+// Initialize everything on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   init();
   initSidebar();
   initThemeToggle();
 });
-

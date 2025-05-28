@@ -1,8 +1,13 @@
 /**
- * Render all tasks into their respective columns.
+ * Render all tasks into their respective columns, sorted by title.
  * @param {Array} tasks
  */
 export function renderTasks(tasks) {
+  // Sort tasks by title (alphabetically)
+  const sortedTasks = [...tasks].sort((a, b) => a.title.localeCompare(b.title));
+  // If you want to sort by id instead, use:
+  // const sortedTasks = [...tasks].sort((a, b) => a.id - b.id);
+
   const columns = {
     todo: document.querySelector('[data-status="todo"] .tasks-container'),
     doing: document.querySelector('[data-status="doing"] .tasks-container'),
@@ -10,18 +15,20 @@ export function renderTasks(tasks) {
   };
 
   // Clear all columns
-  Object.values(columns).forEach(col => col.innerHTML = '');
+  Object.values(columns).forEach(col => {
+    if (col) col.innerHTML = '';
+  });
 
-  // Group and render tasks
-  tasks.forEach(task => {
+  // Render tasks in the correct column
+  sortedTasks.forEach(task => {
     const card = createTaskCard(task);
-    columns[task.status]?.appendChild(card);
+    if (columns[task.status]) columns[task.status].appendChild(card);
   });
 
   // Update column headers with task counts
-  document.getElementById('toDoText').textContent = `TODO (${tasks.filter(t => t.status === 'todo').length})`;
-  document.getElementById('doingText').textContent = `DOING (${tasks.filter(t => t.status === 'doing').length})`;
-  document.getElementById('doneText').textContent = `DONE (${tasks.filter(t => t.status === 'done').length})`;
+  document.getElementById('toDoText').textContent = `TODO (${sortedTasks.filter(t => t.status === 'todo').length})`;
+  document.getElementById('doingText').textContent = `DOING (${sortedTasks.filter(t => t.status === 'doing').length})`;
+  document.getElementById('doneText').textContent = `DONE (${sortedTasks.filter(t => t.status === 'done').length})`;
 }
 
 /**
@@ -37,18 +44,7 @@ export function createTaskCard(task) {
     <strong>${task.title}</strong>
     <span style="margin-left:10px;color:#828fa3;font-size:0.9em;">${task.description || ''}</span>
   `;
-  div.addEventListener('click', () => {
-    const event = new CustomEvent('task:open', { detail: task });
-    window.dispatchEvent(event);
-  });
+  // Optional: Add click event for editing
+  // div.addEventListener('click', () => { ... });
   return div;
-}
-
-/**
- * Generate a new unique task ID.
- * @param {Array} tasks
- * @returns {number}
- */
-export function generateTaskId(tasks) {
-  return tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
 }

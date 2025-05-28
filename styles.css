@@ -496,7 +496,7 @@ textarea {
   background: #ececec;
   box-shadow: 0 2px 8px rgba(100,100,100,0.15);
   border-radius: 8px;
-  padding: 10px 0;
+  padding: 5px 0;
   margin-bottom: 18px;
   gap: 0;
 }
@@ -543,7 +543,7 @@ textarea {
 .hide-sidebar-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   background: #ececec;
   box-shadow: 0 2px 8px rgba(100,100,100,0.15);
@@ -558,4 +558,21 @@ textarea {
 
 .hide-sidebar-btn:hover {
   background: #d3d3d3;
+}
+/* Make sidebar a flex column and push bottom controls to the bottom */
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
+
+}
+
+.sidebar-bottom-controls {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 24px;
 }

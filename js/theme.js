@@ -1,18 +1,12 @@
 const THEME_KEY = 'kanban_theme';
 
 /**
- * Apply the selected theme to the document and update the toggle UI.
+ * Apply the selected theme to the document.
  * @param {'light'|'dark'} theme
  */
 export function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem(THEME_KEY, theme);
-
-  // Move the switch-circle for dark mode
-  const switchCircle = document.querySelector('.switch-circle');
-  if (switchCircle) {
-    switchCircle.style.transform = theme === 'dark' ? 'translateX(20px)' : 'translateX(0)';
-  }
 }
 
 /**

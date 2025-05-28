@@ -5,30 +5,23 @@
 
 const sidebar = document.getElementById('side-bar-div');
 const logo = document.getElementById('logo');
-const sidebarToggleBtn = document.createElement('button');
-sidebarToggleBtn.id = 'sidebar-toggle-btn';
-sidebarToggleBtn.innerHTML = '&#9776;'; // Hamburger icon
-sidebarToggleBtn.style.display = 'none'; // Hidden by default
-
-// Insert toggle button after sidebar for mobile/tablet
-sidebar.parentNode.insertBefore(sidebarToggleBtn, sidebar.nextSibling);
+const hideBtn = document.getElementById('hide-sidebar-btn');
+const showBtn = document.getElementById('show-sidebar-btn');
 
 /**
  * Show sidebar (desktop or mobile).
  */
 export function showSidebar() {
-  sidebar.classList.add('show-sidebar');
   sidebar.style.display = 'flex';
-  sidebarToggleBtn.style.display = 'none';
+  if (showBtn) showBtn.style.display = 'none';
 }
 
 /**
  * Hide sidebar (desktop or mobile).
  */
 export function hideSidebar() {
-  sidebar.classList.remove('show-sidebar');
   sidebar.style.display = 'none';
-  sidebarToggleBtn.style.display = 'block';
+  if (showBtn) showBtn.style.display = 'flex';
 }
 
 /**
@@ -38,35 +31,26 @@ export function initSidebar() {
   // Hide sidebar on mobile/tablet by default
   if (window.innerWidth < 1024) {
     hideSidebar();
+  } else {
+    showSidebar();
   }
-  
-// Hide sidebar button logic
-  const hideBtn = document.getElementById('hide-sidebar-btn');
+
+  // Hide sidebar button logic
   if (hideBtn) {
     hideBtn.addEventListener('click', hideSidebar);
   }
-  // Show/hide sidebar on toggle button click
-  sidebarToggleBtn.addEventListener('click', showSidebar);
+  if (showBtn) {
+    showBtn.addEventListener('click', showSidebar);
+  }
 
   // Hide sidebar when logo is clicked (mobile menu)
-  logo.addEventListener('click', () => {
-    if (window.innerWidth < 1024) {
-      showSidebar();
-    }
-  });
-
-  // Hide sidebar when clicking outside (mobile)
-  document.addEventListener('click', (e) => {
-    if (
-      window.innerWidth < 1024 &&
-      sidebar.classList.contains('show-sidebar') &&
-      !sidebar.contains(e.target) &&
-      e.target !== sidebarToggleBtn &&
-      e.target !== logo
-    ) {
-      hideSidebar();
-    }
-  });
+  if (logo) {
+    logo.addEventListener('click', () => {
+      if (window.innerWidth < 1024) {
+        showSidebar();
+      }
+    });
+  }
 
   // Responsive: hide/show on resize
   window.addEventListener('resize', () => {

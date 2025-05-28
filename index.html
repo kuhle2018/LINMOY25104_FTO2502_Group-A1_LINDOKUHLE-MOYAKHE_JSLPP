@@ -30,7 +30,7 @@
         <button class="board-btn">Launch Career</button>
       </div>
       <!-- In sidebar -->
-  <div class="bottom-sidebar">
+  <div class="sidebar-bottom-controls">
     <div class="theme-toggle-container">
   <span id="light-mode-icon">🌞</span>
   <button class="toggle-theme-btn " aria-label="Switch theme">
@@ -42,7 +42,11 @@
   <span id="close-sidebar-icon">🚫</span>
   <span id="close-sidebar-text">Hide Sidebar</span>
 </button>
-        </div>
+<button id="show-sidebar-btn" class="hide-sidebar-btn" style="display:none; position:fixed; top:20px; left:20px; z-index:1000;">
+  <span id="open-sidebar-icon">👀</span>
+  <span id="open-sidebar-text">Show Sidebar</span>
+</button>
+    
     </div>
     </nav>
 
@@ -181,5 +185,6 @@
         </div>
       </form>
     </dialog>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
