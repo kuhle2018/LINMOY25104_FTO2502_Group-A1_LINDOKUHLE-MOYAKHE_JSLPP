@@ -91,5 +91,14 @@ taskForm.addEventListener('submit', (e) => {
   closeTaskModal();
 });
 
+import { initSidebar } from './sidebar.js';
+import { initThemeToggle } from './theme.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  initSidebar();
+  initThemeToggle();
+});
+
 // Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', init);
