@@ -39,7 +39,12 @@ export function initSidebar() {
   if (window.innerWidth < 1024) {
     hideSidebar();
   }
-
+  
+// Hide sidebar button logic
+  const hideBtn = document.getElementById('hide-sidebar-btn');
+  if (hideBtn) {
+    hideBtn.addEventListener('click', hideSidebar);
+  }
   // Show/hide sidebar on toggle button click
   sidebarToggleBtn.addEventListener('click', showSidebar);
 

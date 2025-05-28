@@ -16,7 +16,7 @@ export function toggleTheme() {
   const current = getCurrentTheme();
   const next = current === 'dark' ? 'light' : 'dark';
   applyTheme(next);
-  updateToggleButtons(next);
+  
 }
 
 /**
