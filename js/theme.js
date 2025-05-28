@@ -32,7 +32,7 @@ export function getCurrentTheme() {
  * @param {'light'|'dark'} theme
  */
 function updateToggleButtons(theme) {
-  document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+  document.querySelectorAll('.toggle-theme-btn').forEach(btn => {
     btn.textContent = theme === 'dark' ? '🌙' : '☀️';
     btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
   });
