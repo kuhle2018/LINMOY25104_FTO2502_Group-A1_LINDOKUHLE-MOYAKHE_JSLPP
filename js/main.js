@@ -100,5 +100,3 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
 });
 
-// Initialize on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', init);
