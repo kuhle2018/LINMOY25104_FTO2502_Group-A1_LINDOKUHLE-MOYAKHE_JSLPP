@@ -25,7 +25,9 @@ This project showcases the deployment of a **Kanban task management system** on 
 
 The Kanban app is hosted on **Netlify**, ensuring smooth access and live functionality.
 
-**Deployment Link**:
+**Deployment Link**: [https://app.netlify.com/projects/creative-clafoutis-b06552/overview]
+
+
 **Recording Link**: [https://www.veed.io/view/27936c3f-635f-46ed-8f7e-08c810451d71?panel=share ]
 
 ## Installation & Usage
