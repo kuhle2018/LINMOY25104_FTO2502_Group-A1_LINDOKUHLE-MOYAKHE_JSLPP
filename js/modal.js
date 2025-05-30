@@ -1,38 +1,38 @@
-let currentTaskId = null; // Track which task is being edited
+window.openTaskModalForNew = function() {
+  const taskModal = document.getElementById('task-modal');
+  const taskForm = document.getElementById('task-form');
+  if (taskForm && taskModal) {
+    taskForm.reset();
+    delete taskForm.dataset.editingId;
+    taskModal.querySelector('h3').textContent = 'Add new task';
+    // Show only Create Task button
+    document.getElementById('create-task-btn').style.display = 'block';
+    document.getElementById('save-task-btn').style.display = 'none';
+    document.getElementById('delete-task-btn').style.display = 'none';
+    taskModal.showModal();
+  }
+};
 
-/**
- * Open the modal for editing or adding a task.
- * @param {Object|null} task If null, open for new task; else, open for editing.
- */
-export function openTaskModal(task = null) {
-  const modal = document.getElementById('task-modal');
-  const form = document.getElementById('task-form');
-  currentTaskId = task ? task.id : null;
+window.openTaskModalWithTask = function(task) {
+  const taskModal = document.getElementById('task-modal');
+  const taskForm = document.getElementById('task-form');
+  if (taskForm && taskModal) {
+    taskForm.reset();
+    taskForm['title'].value = task.title;
+    taskForm['description'].value = task.description;
+    taskForm['status'].value = task.status;
+    taskForm['priority'].value = task.priority || 'low';
+    taskForm.dataset.editingId = task.id;
+    taskModal.querySelector('h3').textContent = 'Edit Task';
+    // Show only Save and Delete buttons
+    document.getElementById('create-task-btn').style.display = 'none';
+    document.getElementById('save-task-btn').style.display = 'block';
+    document.getElementById('delete-task-btn').style.display = 'block';
+    taskModal.showModal();
+  }
+};
 
-  // Set modal fields
-  form['task-title'].value = task ? task.title : '';
-  form['task-desc'].value = task ? task.description : '';
-  form['task-status'].value = task ? task.status : 'todo';
-
-  // Set modal title
-  modal.querySelector('h3').textContent = task ? 'Edit Task' : 'Add Task';
-
-  // Show modal
-  modal.showModal();
-}
-
-/**
- * Close the task modal.
- */
-export function closeTaskModal() {
-  document.getElementById('task-modal').close();
-  currentTaskId = null;
-}
-
-/**
- * Get the current task ID being edited, or null if adding.
- * @returns {number|null}
- */
-export function getCurrentTaskId() {
-  return currentTaskId;
-}
+window.closeTaskModal = function() {
+  const taskModal = document.getElementById('task-modal');
+  if (taskModal) taskModal.close();
+};

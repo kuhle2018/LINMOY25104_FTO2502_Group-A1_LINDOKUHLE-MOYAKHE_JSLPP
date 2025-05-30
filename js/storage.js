@@ -1,18 +1,8 @@
-const STORAGE_KEY = 'kanban_tasks';
+window.saveTasksToStorage = function(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
 
-/**
- * Save tasks array to localStorage.
- * @param {Array} tasks
- */
-export function saveTasksToStorage(tasks) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-}
-
-/**
- * Load tasks array from localStorage.
- * @returns {Array} Array of tasks or empty array if none found.
- */
-export function loadTasksFromStorage() {
-  const data = localStorage.getItem(STORAGE_KEY);
+window.loadTasksFromStorage = function() {
+  const data = localStorage.getItem('tasks');
   return data ? JSON.parse(data) : [];
-}
+};
